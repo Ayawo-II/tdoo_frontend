@@ -40,13 +40,12 @@ export default function DashboardLayout({
     { href: "/dashboard/tasks", label: "Mes tâches", icon: <CheckSquare /> },
     { href: "/dashboard/calendar", label: "Calendrier", icon: <CalendarDays /> },
   ]
-  
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50 relative">
 
-      <aside className={`${sidebarOpen ? "w-64" : "w-0 overflow-hidden"} bg-indigo-900 flex flex-col transition-all duration-300`}>
-
+      {/* Sidebar overlay mobile */}
+      <aside className={`fixed z-50 h-full bg-indigo-900 flex flex-col transition-transform duration-300 w-64 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:relative md:translate-x-0`}>
         <div className="p-6 border-b border-indigo-600">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
@@ -80,21 +79,30 @@ export default function DashboardLayout({
             <span>Déconnexion</span>
           </button>
         </div>
-
       </aside>
 
-      <div className="flex-1 flex flex-col overflow-auto">
+      {/* Overlay (fond sombre cliquable) */}
+      {isMobile && sidebarOpen && (
+        <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setSidebarOpen(false)} />
+      )}
 
+      {/* Bouton burger mobile */}
+      {isMobile && !sidebarOpen && (
+        <button onClick={() => setSidebarOpen(true)} className="fixed top-4 left-4 z-50 p-2 bg-indigo-600 text-white rounded-lg shadow-md">
+          ☰
+        </button>
+      )}
+
+      {/* Contenu principal */}
+      <div className="flex-1 flex flex-col overflow-auto w-full">
         <div className="h-14 bg-white border-b border-gray-200 flex items-center justify-between px-4">
-          {/* Bouton menu à gauche */}
-          <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 rounded-lg hover:bg-gray-100 transition-colors">
+          <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 rounded-lg hover:bg-gray-100 transition-colors md:hidden">
             <div className="w-5 h-0.5 bg-gray-600 mb-1"></div>
             <div className="w-5 h-0.5 bg-gray-600 mb-1"></div>
             <div className="w-5 h-0.5 bg-gray-600"></div>
           </button>
 
-          {/* Utilisateur à droite */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 ml-auto">
             <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
               <span className="text-indigo-700 font-bold text-sm">
                 {user?.username?.charAt(0).toUpperCase() || "U"}
@@ -109,7 +117,6 @@ export default function DashboardLayout({
         <main className="flex-1 overflow-auto">
           {children}
         </main>
-
       </div>
 
     </div>

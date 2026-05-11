@@ -112,8 +112,8 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl border border-gray-200 p-5">
+      <div className="flex flex-col lg:flex-row gap-6">
+        <div className="bg-white rounded-xl border border-gray-200 p-5 lg:w-1/2">
           <h2 className="font-bold text-gray-900 mb-4">Répartition des tâches</h2>
           <ResponsiveContainer width="100%" height={220}>
             <PieChart>
@@ -135,7 +135,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-5">
+        <div className="bg-white rounded-xl border border-gray-200 p-5 lg:w-1/2">
           <h2 className="font-bold text-gray-900 mb-4">Tâches créées (8 derniers jours)</h2>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={barData}>

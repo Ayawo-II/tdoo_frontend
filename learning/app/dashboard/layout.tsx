@@ -9,7 +9,8 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode
 }) {
-  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const pathname = usePathname()
   const [user, setUser] = useState<{username: string} | null>(null)
 
@@ -17,6 +18,21 @@ export default function DashboardLayout({
     const stored = localStorage.getItem("user")
     if (stored) setUser(JSON.parse(stored))
   }, [])
+
+  useEffect(() => {
+    const checkScreen = () => {
+      const mobile = window.innerWidth < 768
+      setIsMobile(mobile)
+      if (!mobile) setSidebarOpen(true)
+    }
+    checkScreen()
+    window.addEventListener('resize', checkScreen)
+    return () => window.removeEventListener('resize', checkScreen)
+  }, [])
+
+  useEffect(() => {
+    if (isMobile) setSidebarOpen(false)
+  }, [pathname, isMobile])
 
   const navItems = [
     { href: "/dashboard", label: "Accueil", icon: <LayoutDashboard /> },

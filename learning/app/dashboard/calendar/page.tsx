@@ -56,10 +56,10 @@ export default function CalendarPage() {
   }
 
   return (
-    <div className="p-8 flex gap-6">
+    <div className="p-8 flex flex-col lg:flex-row gap-6">
 
       {/* Calendrier */}
-      <div className="flex-1">
+      <div className="order-2 lg:order-1 flex-1">
 
         {/* En-tête */}
         <div className="flex items-center justify-between mb-6">
@@ -149,7 +149,7 @@ export default function CalendarPage() {
       </div>
 
       {/* Panneau latéral */}
-      <div className="w-72">
+      <div className="order-1 lg:order-2 lg:w-72">
         <div className="bg-white rounded-xl border border-gray-200 p-4">
           <h2 className="font800 text-gray-800 mb900 mb-4">
             {selectedDate ? (

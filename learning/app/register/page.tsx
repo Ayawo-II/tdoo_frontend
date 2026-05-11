@@ -3,6 +3,8 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"
+
 export default function RegisterPage() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
@@ -10,7 +12,7 @@ export default function RegisterPage() {
   const router = useRouter()
 
   async function handleSubmit() {
-    const res = await fetch("https://tdoo-backend.onrender.com/api/auth/register", {
+    const res = await fetch(`${API_URL}/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
